@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    <h1>Login Page</h1>
+    <form id="facial_scan_form" action="/" method="post">
+        <!-- Add a hidden input field to indicate that facial scan button is pressed -->
+        <input type="hidden" name="facial_scan" value="true">
+        <!-- Trigger facial recognition logic in main.py when the button is clicked -->
+        <button id="facial_scan_button" type="button">Perform Facial Scan Login</button>
+    </form>
+    <br>
+    <a href="/register">Create Account</a>
+
+    <script>
+        // event listener for facial scan button
+        document.getElementById('facial_scan_button').addEventListener('click', function() {
+            document.getElementById('facial_scan_form').submit();
+        });
+    </script>
+</body>
+</html>

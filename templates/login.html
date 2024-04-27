@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <video id="video" width="640" height="480" autoplay></video><br>
+    <button id="captureButton" type="button">Capture Facial Data</button>
+    
+    <script>
+        const video = document.getElementById('video');
+        const captureButton = document.getElementById('captureButton');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+                video.play(); // Added this line to ensure the video starts playing
+            })
+            .catch((error) => {
+                console.error('Error accessing camera:', error);
+            });
+
+        captureButton.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+            console.log(imageData);  // Send imageData to the server for processing
+        });
+    </script>
+</body>
+</html>

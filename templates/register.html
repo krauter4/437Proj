@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <video id="video" width="640" height="480" autoplay></video><br>
+    <button id="captureButton" type="button">Capture Facial Data</button>
+    
+    <form id="registerForm" action="/register" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <!-- Success message to display when facial data is captured -->
+    <span id="successMessage"></span>
+
+    <script>
+        const captureButton = document.getElementById('captureButton');
+        const registerForm = document.getElementById('registerForm');
+
+        captureButton.addEventListener('click', () => {
+            // Get the username from the form
+            const username = registerForm.elements.username.value;
+
+            // Send a request to the server to trigger the store_face_data function
+            fetch('/capture_facial_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username }) 
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('successMessage').innerText = 'Facial data captured and stored.';
+                } else {
+                    document.getElementById('successMessage').innerText = 'Failed to store facial data.';
+                }
+            })
+            .catch(error => {
+                console.error('Error storing facial data:', error);
+                document.getElementById('successMessage').innerText = 'Error storing facial data.';
+            });
+        });
+    </script>
+</body>
+</html>
